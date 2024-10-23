@@ -5,7 +5,10 @@ node_modules/
 
 # Expo
 .expo/
+<<<<<<< HEAD
 dist/
+=======
+>>>>>>> production
 web-build/
 
 # Native

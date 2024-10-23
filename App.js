@@ -2,11 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   View,
   Image,
-  ScrollView,
   Button,
   Platform,
 } from "react-native";
@@ -17,8 +15,10 @@ import * as Network from "expo-network";
 import styles from "./Appstyles";
 import Heading from "./components/Heading";
 import ListContainer from "./components/ListContainer";
+import Dashboard from "./pages/Dashboard";
+import Item from "./pages/ItemPage";
 
-import Item from "./pages/Item";
+// import shoppingLogo from "../components/shopping-logo.png";
 
 function HomeScreen({ navigation }) {
   const [data, setData] = useState([]);
@@ -40,18 +40,42 @@ function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.largeHeading}>DashBoard</Text>
-      <Heading level="3">This is a heading</Heading>
-      {Platform.OS === "ios" ? (
-        <Text>I am IOS</Text>
-      ) : (
-        <Text>I am NOT ON IOS</Text>
-      )}
-      <Button
-        title="Item Details"
-        onPress={() => navigation.navigate("Item")}
+      <Image
+        source={require("./components/shopping1.webp")}
+        style={styles.backgroundImage}
       />
-      <ListContainer data={data} />
+      <View style={styles.navBar}>
+        <Button
+          title="Home"
+          onPress={() => navigation.navigate("HomeScreen")}
+          style={styles.navButtons}
+        />
+        <Button
+          title="Dashboard"
+          onPress={() => navigation.navigate("Dashboard")}
+          style={styles.navButtons}
+        />
+      </View>
+      <View style={styles.overlay}>
+        <View style={styles.headingColorBox}>
+          <Text style={styles.largeHeading}>Your Digital Shopping List</Text>
+        </View>
+        <Image
+          source={require("./components/shopping-logo.png")}
+          style={styles.largeLogo}
+        />
+        <View style={styles.pColorBox}>
+          <Heading level="4" style={styles.p}>
+            Welcome to Shopping Buddy! With our help you'll always have your
+            shopping list handy, not matter what! Planning done right!
+          </Heading>
+        </View>
+        {Platform.OS === "ios" ? (
+          <Text>I am IOS</Text>
+        ) : (
+          <Text>I am NOT ON IOS</Text>
+        )}
+      </View>
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -66,9 +90,71 @@ export default function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: "Shopping Buddy" }}
+          options={{
+            title: "Shopping Buddy",
+            headerTitleAlign: "center",
+            headerStyle: {
+              backgroundColor: "#cbbfbf",
+            },
+            headerTintColor: "#fff",
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>Shopping Buddy</Text>
+            ),
+            headerLeft: () => (
+              <View style={styles.headerTitleContainer}>
+                <Image
+                  source={require("./components/shopping-logo.png")}
+                  style={styles.logo}
+                />
+              </View>
+            ),
+          }}
         />
-        <Stack.Screen name="Item" component={Item} />
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            headerStyle: {
+              backgroundColor: "#cbbfbf",
+            },
+            headerTintColor: "#fff",
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>Shopping Buddy</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerRight: () => (
+              <View style={styles.headerTitleContainer}>
+                <Image
+                  source={require("./components/shopping-logo.png")}
+                  style={styles.logo}
+                />
+              </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="ItemPage"
+          component={Item}
+          options={{
+            title: "Shopping Buddy",
+            headerTitleAlign: "center",
+            headerStyle: {
+              backgroundColor: "#cbbfbf",
+            },
+            headerTintColor: "#fff",
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>Shopping Buddy</Text>
+            ),
+            headerLeft: () => (
+              <View style={styles.headerTitleContainer}>
+                <Image
+                  source={require("./components/shopping-logo.png")}
+                  style={styles.logo}
+                />
+              </View>
+            ),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
